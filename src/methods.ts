@@ -19,7 +19,7 @@ export const start = async (): Promise<boolean> => {
 
         console.log('SDK initialization result:', initSuccess);
         if (!initSuccess) {
-            console.error('SDK initialize() returned false — ensure the game runs inside funny-games play iframe, not standalone');
+            console.error('SDK initialize() returned false — ensure the game runs inside the FunniGames platform iframe, not standalone');
         }
 
         if (initSuccess) {
@@ -163,7 +163,7 @@ export const purchaseGamePackage = async (
         console.log(`Opening purchase for SKU: ${sku}, identifier: ${identifier}`);
 
         const result = await FunniGamesSDK.packages.purchase(sku.trim(), identifier.trim());
-        console.log('Purchase PayWall result:', result);
+        console.log('Purchase result:', result);
 
         return !!result.status;
     } catch (error) {

@@ -87,7 +87,7 @@ const App = () => {
                 showStatus("SDK با موفقیت initialize شد.", "success");
             } else {
                 showStatus(
-                    "initialize ناموفق — بازی باید داخل iframe صفحه play در funny-games باز شود.",
+                    "initialize ناموفق — بازی باید داخل iframe پلتفرم FunniGames باز شود.",
                     "error",
                 );
             }
@@ -200,7 +200,7 @@ const App = () => {
             if (result.data.length > 0) {
                 setPackageSku((current) => current || result.data[0].sku);
             }
-            showStatus(`${result.data.length} پکیج فعال از host دریافت شد.`, "success");
+            showStatus(`${result.data.length} پکیج فعال از پلتفرم دریافت شد.`, "success");
         } else {
             setPackagesData(null);
             showStatus("لیست پکیج‌ها خالی است یا خطا رخ داد.", "error");
@@ -263,11 +263,11 @@ const App = () => {
 
         if (success) {
             showStatus(
-                "PayWall باز شد. پرداخت را در host انجام دهید، سپس Check Token بزنید.",
+                "فرآیند خرید باز شد. پرداخت را در پلتفرم انجام دهید، سپس Check Token بزنید.",
                 "success",
             );
         } else {
-            showStatus("باز کردن PayWall ناموفق بود.", "error");
+            showStatus("باز کردن فرآیند خرید ناموفق بود.", "error");
         }
     };
 
@@ -283,7 +283,7 @@ const App = () => {
             <header className="demo-header">
                 <h1>FunniGames SDK — Demo</h1>
                 <p>
-                    این پروژه برای تست <code>funnisdk</code> داخل iframe funny-games است.
+                    این پروژه برای تست <code>funnisdk</code> داخل iframe پلتفرم FunniGames است.
                     هر بخش یک API SDK را صدا می‌زند و خروجی JSON را پایین همان کارت نشان می‌دهد.
                 </p>
                 <div className="status-row">
@@ -298,8 +298,8 @@ const App = () => {
 
             {!initialized && !loading && (
                 <div className="banner error">
-                    بازی را مستقیم روی localhost باز نکنید. URL این پروژه را در dashboard به عنوان
-                    EXTERNAL game URL ثبت کنید و از صفحه play در funny-games تست کنید.
+                    بازی را مستقیم روی localhost باز نکنید. URL این پروژه را در پلتفرم ثبت کنید
+                    و از صفحه play در FunniGames تست کنید.
                 </div>
             )}
 
@@ -312,7 +312,7 @@ const App = () => {
                             <div className="en">FunniGamesSDK.profile.getProfile()</div>
                         </div>
                         <p className="hint">
-                            <strong>کار:</strong> اطلاعات کاربر لاگین‌شده (نام، سکه، wallet و …) را از host می‌گیرد.
+                            <strong>کار:</strong> اطلاعات کاربر لاگین‌شده (نام، سکه، wallet و …) را از پلتفرم می‌گیرد.
                             <br />
                             <strong>انتظار:</strong> بعد از کلیک، آبجکت پروفایل در خروجی نمایش داده می‌شود.
                         </p>
@@ -391,14 +391,14 @@ const App = () => {
                             <div className="en">packages.list() · purchase() · checkToken()</div>
                         </div>
                         <p className="hint">
-                            <strong>مثل Unity:</strong> بازی slug را نمی‌فرستد — host از context play page آن را به API وصل می‌کند.
+                            بازی نیازی به ارسال شناسه بازی ندارد — پلتفرم context را از صفحه play می‌گیرد.
                             شما فقط <strong>SKU</strong> (از کاتالوگ) و <strong>identifier</strong> (توکن یکتای خود بازی) را می‌دهید.
                         </p>
                         <div className="card-body">
                             <ol className="steps">
                                 <li>List Packages — کاتالوگ پکیج‌های فعال این بازی</li>
                                 <li>SKU را انتخاب کنید + identifier یکتا بزنید (مثلاً level-3-bonus)</li>
-                                <li>Buy Package — PayWall host باز می‌شود (منتظر پرداخت نمی‌ماند)</li>
+                                <li>Buy Package — UI خرید پلتفرم باز می‌شود (منتظر پرداخت نمی‌ماند)</li>
                                 <li>بعد از پرداخت: Check Token یا List Owned</li>
                             </ol>
                             <div className="field-row">
