@@ -1,5 +1,5 @@
 @import url('https://csstools.github.io/normalize.css/11.0.0/normalize.css');
 
-body {
-    background: #fff;
+#root {
+    min-height: 100vh;
 }

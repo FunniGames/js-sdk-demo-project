@@ -14,9 +14,13 @@ export const start = async (): Promise<boolean> => {
         const initSuccess = await FunniGamesSDK.initialize({
             leaderboard: true,
             gameplay: true,
+            packages: true,
         });
 
         console.log('SDK initialization result:', initSuccess);
+        if (!initSuccess) {
+            console.error('SDK initialize() returned false — ensure the game runs inside funny-games play iframe, not standalone');
+        }
 
         if (initSuccess) {
             isInitialized = true;
@@ -116,6 +120,87 @@ export const addScore = async (score: number): Promise<boolean> => {
     } catch (error) {
         console.error('Failed to add score:', error);
         return false;
+    }
+}
+
+export const listGamePackages = async () => {
+    try {
+        if (!isInitialized) {
+            console.warn('SDK not initialized. Call start() first.');
+            return null;
+        }
+
+        console.log('Getting game packages catalog...');
+        const result = await FunniGamesSDK.packages.list();
+        console.log('Game packages:', result.data);
+        return result;
+    } catch (error) {
+        console.error('Failed to list game packages:', error);
+        return null;
+    }
+}
+
+export const purchaseGamePackage = async (
+    sku: string,
+    identifier: string,
+): Promise<boolean> => {
+    try {
+        if (!isInitialized) {
+            console.warn('SDK not initialized. Call start() first.');
+            return false;
+        }
+
+        if (!sku.trim()) {
+            console.warn('Package SKU is required');
+            return false;
+        }
+
+        if (!identifier.trim()) {
+            console.warn('Purchase identifier is required');
+            return false;
+        }
+
+        console.log(`Opening purchase for SKU: ${sku}, identifier: ${identifier}`);
+
+        const result = await FunniGamesSDK.packages.purchase(sku.trim(), identifier.trim());
+        console.log('Purchase PayWall result:', result);
+
+        return !!result.status;
+    } catch (error) {
+        console.error('Failed to open package purchase:', error);
+        return false;
+    }
+}
+
+export const listOwnedPackages = async () => {
+    try {
+        if (!isInitialized) {
+            console.warn('SDK not initialized. Call start() first.');
+            return null;
+        }
+
+        const result = await FunniGamesSDK.packages.listOwned();
+        console.log('Owned packages:', result.data);
+        return result;
+    } catch (error) {
+        console.error('Failed to list owned packages:', error);
+        return null;
+    }
+}
+
+export const checkPackageToken = async (identifier: string) => {
+    try {
+        if (!isInitialized) {
+            console.warn('SDK not initialized. Call start() first.');
+            return null;
+        }
+
+        const result = await FunniGamesSDK.packages.checkToken(identifier.trim());
+        console.log('Check token result:', result);
+        return result;
+    } catch (error) {
+        console.error('Failed to check package token:', error);
+        return null;
     }
 }
 
